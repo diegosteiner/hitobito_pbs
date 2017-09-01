@@ -21,15 +21,15 @@ module Pbs::RolesController
   end
 
   def after_create_location_with_deleted(new_person)
-    if model_params[:deleted_at]
-      group_people_path(entry.group_id)
+    if model_params[:deleted_at].strip.present?
+      edit_group_person_path(id: entry.person.id, group_id: entry.group_id)
     else
       after_create_location_without_deleted(new_person)
     end
   end
 
   def after_update_location_with_deleted
-    if model_params[:deleted_at]
+    if model_params[:deleted_at].strip.present?
       group_people_path(entry.group_id)
     else
       after_update_location_without_deleted
